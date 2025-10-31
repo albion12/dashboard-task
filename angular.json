@@ -7,8 +7,11 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
-        }
+        "type": "component",
+        "style": "scss",
+        "standalone": true,
+        "skipTests": true
+      }
       },
       "root": "",
       "sourceRoot": "src",
@@ -30,7 +33,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/styles/material-theme.scss"
             ]
           },
           "configurations": {

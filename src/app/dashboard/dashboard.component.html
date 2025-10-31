@@ -1,0 +1,64 @@
+<div class="dashboard-header">
+  <h2>Dashboard</h2>
+  <button mat-raised-button color="primary" (click)="saveLayout()">Save Layout</button>
+</div>
+
+<gridster [options]="options">
+  @for (item of dashboard; track $index) {
+    <gridster-item [item]="item">
+      <mat-card class="widget-card">
+        <div class="widget-header">
+          <span>{{ item.label }}</span>
+          <button mat-icon-button>
+            <mat-icon>open_with</mat-icon>
+          </button>
+        </div>
+
+        <div class="widget-body">
+          @if (item.label === 'Total Sales') {
+            <div class="sales">
+              <h3>$56,780</h3>
+            </div>
+          }
+          @else if (item.label === 'Line Chart') {
+            <div class="chart-container">
+              <canvas baseChart [type]="'line'" [data]="lineChartData" [options]="chartOptions"></canvas>
+            </div>
+          }
+          @else if (item.label === 'Bar Chart') {
+            <div class="chart-container">
+              <canvas baseChart [type]="'bar'" [data]="barChartData" [options]="chartOptions"></canvas>
+            </div>
+          }
+          @else if (item.label === 'Table') {
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Country</th>
+                  <th>Sales</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (r of [
+                  { name: 'John Smith', email: 'john@example.com', country: 'USA', sales: 1200 },
+                  { name: 'Alice Johnson', email: 'alice@example.com', country: 'Canada', sales: 800 },
+                  { name: 'Michael Brown', email: 'michael@example.com', country: 'UK', sales: 1500 },
+                  { name: 'Emily Davis', email: 'emily@example.com', country: 'Australia', sales: 700 }
+                ]; track $index) {
+                  <tr>
+                    <td>{{ r.name }}</td>
+                    <td>{{ r.email }}</td>
+                    <td>{{ r.country }}</td>
+                    <td>\${{ r.sales }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          }
+        </div>
+      </mat-card>
+    </gridster-item>
+  }
+</gridster>

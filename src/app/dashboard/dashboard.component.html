@@ -2,16 +2,12 @@
   <h2>Dashboard</h2>
   <button mat-raised-button color="primary" (click)="saveLayout()">Save Layout</button>
 </div>
-
 <gridster [options]="options">
   @for (item of dashboard; track $index) {
     <gridster-item [item]="item">
       <mat-card class="widget-card">
         <div class="widget-header">
           <span>{{ item.label }}</span>
-          <button mat-icon-button>
-            <mat-icon>open_with</mat-icon>
-          </button>
         </div>
 
         <div class="widget-body">
@@ -57,6 +53,9 @@
               </tbody>
             </table>
           }
+          @else if (item.label === 'Filter Bar') {
+              <app-filter-bar></app-filter-bar> 
+         }
         </div>
       </mat-card>
     </gridster-item>

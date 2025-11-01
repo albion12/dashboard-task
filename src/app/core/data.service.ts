@@ -1,29 +1,12 @@
 import { Injectable } from '@angular/core';
-
-export interface Sale {
-  id: number;
-  amount: number;
-  country: string;
-  user: string;
-  date: string;
-}
-
-export interface EngagementPoint {
-  date: string;
-  activeUsers: number;
-  sessions: number;
-}
+import { Sale } from './models/sale.model';
+import { EngagementPoint } from './models/engagement.model';
+import { MOCK_SALES } from './data/mock-sales';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
-  // Mock sales data
-  private sales: Sale[] = [
-    { id: 1, amount: 1200, country: 'USA', user: 'John Smith', date: '2025-01-01' },
-    { id: 2, amount: 800, country: 'Canada', user: 'Alice Johnson', date: '2025-01-05' },
-    { id: 3, amount: 1500, country: 'UK', user: 'Michael Brown', date: '2025-01-10' },
-    { id: 4, amount: 700, country: 'Australia', user: 'Emily Davis', date: '2025-01-12' },
-    { id: 5, amount: 950, country: 'Germany', user: 'Oliver Schmidt', date: '2025-01-15' },
-  ];
+
+  private sales: Sale[] = MOCK_SALES;
 
   // Mock engagement data (randomized for realism)
   private engagement: EngagementPoint[] = Array.from({ length: 30 }).map((_, i) => {
@@ -40,8 +23,18 @@ export class DataService {
 
   // Returns filtered sales
   getSales(from?: string, to?: string): Sale[] {
-    return this.filterByDate(this.sales, from, to);
-  }
+  if (!from || !to) return this.sales;
+
+  const fromDate = new Date(from);
+  const toDate = new Date(to);
+
+  return this.sales.filter(sale => {
+    const saleDate = new Date(sale.date);
+    return saleDate >= fromDate && saleDate <= toDate;
+  });
+}
+
+
 
   // Returns filtered engagement data
   getEngagement(from?: string, to?: string): EngagementPoint[] {

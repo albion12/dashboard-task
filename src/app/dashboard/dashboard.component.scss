@@ -16,6 +16,7 @@ gridster {
   width: 100%;
   height: calc(100vh - 80px);
   box-sizing: border-box;
+   background: #e9e7e7;
 }
 
 
@@ -87,4 +88,14 @@ gridster {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.table-container {
+  width: 100%;
+  overflow: auto;
+}
+
+.table-filter {
+  width: 250px;
+  margin-bottom: 10px;
 }

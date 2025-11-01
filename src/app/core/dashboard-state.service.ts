@@ -1,27 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
-export interface DateRange {
-  from?: string;
-  to?: string;
-}
+import { DateRanges } from './models/filters.model';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardStateService {
   private FILTERS_KEY = 'dashboard_filters_v1';
   private LAYOUT_KEY = 'dashboard_layout_v1';
 
-  private _filters = new BehaviorSubject<DateRange>(
-    this.getFromLocalStorage<DateRange>(this.FILTERS_KEY, {})
+  private _filters = new BehaviorSubject<DateRanges>(
+    this.getFromLocalStorage<DateRanges>(this.FILTERS_KEY, {})
   );
   filters$ = this._filters.asObservable();
 
-  setFilters(filters: DateRange) {
+  setFilters(filters: DateRanges) {
     this._filters.next(filters);
     localStorage.setItem(this.FILTERS_KEY, JSON.stringify(filters));
   }
 
-  getFilters(): DateRange {
+  getFilters(): DateRanges {
     return this._filters.value;
   }
 

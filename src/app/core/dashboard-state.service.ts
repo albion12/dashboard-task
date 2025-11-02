@@ -13,11 +13,9 @@ export class DashboardStateService {
   filters$ = this._filters.asObservable();
 
   setFilters(filters: DateRanges) {
-    // ---------- ALWAYS a fresh object ----------
     this._filters.next({ ...filters });
     localStorage.setItem(this.FILTERS_KEY, JSON.stringify(filters));
   }
-  
   getFilters(): DateRanges {
     return this._filters.value;
   }

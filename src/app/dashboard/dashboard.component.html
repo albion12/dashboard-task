@@ -1,6 +1,6 @@
 <div class="dashboard-header">
   <h2>Dashboard</h2>
-  <button mat-raised-button color="primary" (click)="saveLayout()">Save Layout</button>
+    <button mat-raised-button color="primary" (click)="exportCSV()">Export as CSV</button>
 </div>
 <gridster [options]="options">
   @for (item of dashboard; track $index) {

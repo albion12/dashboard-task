@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GridsterConfig, GridsterItem, GridsterModule } from 'angular-gridster2';
+import { GridsterConfig, GridsterModule } from 'angular-gridster2';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,7 +16,7 @@ import { DashboardStateService } from '../core/dashboard-state.service';
 import { DataService } from '../core/data.service';
 import { MatInputModule } from '@angular/material/input';
 import { DashboardItem } from '../core/models/dashboard-item.model';
-
+import { DataExportService } from '../core/data-export.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,7 +30,7 @@ import { DashboardItem } from '../core/models/dashboard-item.model';
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
-    MatInputModule, 
+    MatInputModule,
     MatSortModule,
     BaseChartDirective,
     FilterBarComponent,
@@ -41,10 +41,15 @@ import { DashboardItem } from '../core/models/dashboard-item.model';
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   private state = inject(DashboardStateService);
   private data = inject(DataService);
+  private exportService = inject(DataExportService);
   private sub?: Subscription;
 
   options!: GridsterConfig;
   dashboard: DashboardItem[] = [];
+  sales = this.data.getSales();
+
+  // ✅ Chart type selector
+  chartType: 'line' | 'bar' | 'pie' = 'line';
 
   lineChartData: ChartConfiguration['data'] = { labels: [], datasets: [] };
   barChartData: ChartConfiguration['data'] = { labels: [], datasets: [] };
@@ -68,7 +73,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       draggable: { enabled: true },
       resizable: { enabled: true },
       pushItems: true,
-      margin: 2,         
+      margin: 2,
       displayGrid: 'none',
       minCols: 6,
       minRows: 4,
@@ -135,11 +140,17 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
-  saveLayout() {
-    this.persistLayout();
-  }
+  // saveLayout() {
+  //   this.persistLayout();
+  // }
 
   private persistLayout() {
     this.state.setLayout(this.dashboard);
   }
+
+  exportCSV() {
+    this.exportService.exportToCSV(this.sales);
+  }
+
+  
 }

@@ -74,7 +74,7 @@
             </div>
           }
           @else if (item.label === 'Table') {
-            <app-table-widget [sales]="sales"></app-table-widget>
+           <app-table-widget [sales]="dataSource.data"></app-table-widget>
           }
           @else if (item.label === 'Filter Bar') {
             <app-filter-bar></app-filter-bar>

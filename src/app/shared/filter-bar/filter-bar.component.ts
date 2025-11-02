@@ -7,7 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
-import { DashboardStateService } from '../../core/dashboard-state.service';
+import { DashboardStateService } from '../../core/services/dashboard-state.service';
 
 @Component({
   selector: 'app-filter-bar',

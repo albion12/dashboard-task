@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DateRanges } from './models/filters.model';
+import { DateRanges } from '../models/filters.model';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardStateService {

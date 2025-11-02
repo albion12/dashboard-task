@@ -12,11 +12,11 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { FilterBarComponent } from '../shared/filter-bar/filter-bar.component';
-import { DashboardStateService } from '../core/dashboard-state.service';
-import { DataService } from '../core/data.service';
+import { DashboardStateService } from '../core/services/dashboard-state.service';
+import { DataService } from '../core/services/data.service';
 import { MatInputModule } from '@angular/material/input';
 import { DashboardItem } from '../core/models/dashboard-item.model';
-import { DataExportService } from '../core/data-export.service';
+import { DataExportService } from '../core/services/data-export.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TableWidgetComponent } from '../table/table-widget.component';
 
@@ -92,7 +92,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.sub = this.state.filters$.subscribe((f) => {
       const sales = this.data.getSales(f.from, f.to);
-      const engagement = this.data.getEngagement(f.from, f.to);
       this.totalSales = sales.reduce((s, r) => s + r.amount, 0);
 
          //LINE CHART → total sales over time

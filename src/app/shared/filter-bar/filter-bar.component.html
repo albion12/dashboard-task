@@ -1,37 +1,34 @@
 <div class="filter-bar">
-  <mat-form-field appearance="outline" class="dataset-field">
+
+  <mat-form-field appearance="outline">
     <mat-label>Dataset</mat-label>
     <mat-select [(value)]="selectedDataset">
-      @for (d of datasets; track $index) {
-        <mat-option [value]="d">{{ d }}</mat-option>
-      }
+      <mat-option *ngFor="let ds of datasets" [value]="ds">{{ds}}</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="range-field">
-    <mat-label>Quick Range</mat-label>
-    <mat-select [(value)]="selectedRange" (selectionChange)="setQuickRange($event.value)">
-      <mat-option value="last30">Last 30 days</mat-option>
-      <mat-option value="last90">Last 90 days</mat-option>
-      <mat-option value="">Custom</mat-option>
-    </mat-select>
+  <button mat-raised-button
+          [color]="selectedRange==='last90' ? 'primary' : ''"
+          (click)="setQuickRange('last90')">Last 90 Days</button>
+
+  <button mat-raised-button
+          [color]="selectedRange==='last30' ? 'primary' : ''"
+          (click)="setQuickRange('last30')">Last 30 Days</button>
+
+  <mat-form-field appearance="outline">
+    <mat-label>From</mat-label>
+    <input matInput [matDatepicker]="fromPicker" [(ngModel)]="startDate">
+    <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+    <mat-datepicker #fromPicker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="date-field" *ngIf="selectedRange === ''">
-    <mat-label>Date range</mat-label>
-    <mat-date-range-input [rangePicker]="picker">
-      <input matStartDate placeholder="From" #fromInput />
-      <input matEndDate placeholder="To" #toInput />
-    </mat-date-range-input>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
+  <mat-form-field appearance="outline">
+    <mat-label>To</mat-label>
+    <input matInput [matDatepicker]="toPicker" [(ngModel)]="endDate">
+    <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+    <mat-datepicker #toPicker></mat-datepicker>
   </mat-form-field>
 
-  <!-- <button mat-stroked-button color="primary" (click)="apply(fromInput.value, toInput.value)" *ngIf="selectedRange === ''">
-    Apply
-  </button> -->
-
-  <span class="spacer"></span>
-
-  <button mat-flat-button color="primary" (click)="clear()">Clear</button>
+  <button mat-raised-button color="accent" (click)="apply()">Apply</button>
+  <button mat-stroked-button (click)="clear()">Clear</button>
 </div>

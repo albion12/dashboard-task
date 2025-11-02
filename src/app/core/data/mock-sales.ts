@@ -1,8 +1,8 @@
 import { Sale } from '../models/sale.model';
 
 export const MOCK_SALES: Sale[] = [
-  { id: 1, amount: 1200, country: 'USA', user: 'John Smith', date: '2025-01-02' },
-  { id: 2, amount: 950, country: 'Canada', user: 'Alice Johnson', date: '2025-01-05' },
+  { id: 1, amount: 1200, country: 'USA', user: 'John Smith', date: '2025-09-02' },
+  { id: 2, amount: 950, country: 'Canada', user: 'Alice Johnson', date: '2025-10-05' },
   { id: 3, amount: 1500, country: 'UK', user: 'Michael Brown', date: '2025-01-10' },
   { id: 4, amount: 700, country: 'Australia', user: 'Emily Davis', date: '2025-01-12' },
   { id: 5, amount: 1800, country: 'Germany', user: 'Lukas Müller', date: '2025-01-14' },

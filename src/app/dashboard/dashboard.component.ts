@@ -80,16 +80,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
       minCols: 6,
       minRows: 4,
-      itemChangeCallback: () => this.persistLayout(),
-      itemResizeCallback: () => this.persistLayout(),
     };
 
     this.dashboard = this.state.getLayout<DashboardItem[]>([
       { cols: 2, rows: 1, y: 0, x: 0, label: 'Total Sales' },
       { cols: 4, rows: 1, y: 0, x: 2, label: 'Filter Bar' },
-      { cols: 2, rows: 2, y: 1, x: 0, label: 'Line Chart' },
-      { cols: 2, rows: 2, y: 1, x: 2, label: 'Bar Chart' },
-      { cols: 2, rows: 2, y: 1, x: 4, label: 'Table' },
+      { cols: 2, rows: 3, y: 1, x: 0, label: 'Line Chart' },
+      { cols: 2, rows: 3, y: 1, x: 2, label: 'Bar Chart' },
+      { cols: 2, rows: 3, y: 1, x: 4, label: 'Table' },
     ]);
 
     this.sub = this.state.filters$.subscribe((f) => {
@@ -97,9 +95,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       const engagement = this.data.getEngagement(f.from, f.to);
       this.totalSales = sales.reduce((s, r) => s + r.amount, 0);
 
-      /* -------------------------------------------------
-         1. LINE CHART → TOTAL SALES OVER TIME (cumulative)
-         ------------------------------------------------- */
+         //LINE CHART → total sales over time
       const salesByDate = sales.reduce((acc, s) => {
         acc[s.date] = (acc[s.date] || 0) + s.amount;
         return acc;
@@ -233,4 +229,18 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   exportCSV() {
     this.exportService.exportToCSV(this.sales);
   }
+  saveLayout() {
+  this.state.setLayout(this.dashboard);
+}
+
+resetLayout() {
+  localStorage.removeItem('dashboard_layout_v1');
+  this.dashboard = this.state.getLayout<DashboardItem[]>([
+    { cols: 2, rows: 1, y: 0, x: 0, label: 'Total Sales' },
+    { cols: 4, rows: 1, y: 0, x: 2, label: 'Filter Bar' },
+    { cols: 2, rows: 3, y: 1, x: 0, label: 'Line Chart' },
+    { cols: 2, rows: 3, y: 1, x: 2, label: 'Bar Chart' },
+    { cols: 2, rows: 3, y: 1, x: 4, label: 'Table' },
+  ]);
+}
 }

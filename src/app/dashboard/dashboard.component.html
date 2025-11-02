@@ -1,6 +1,10 @@
 <div class="dashboard-header">
   <h2>Dashboard</h2>
-  <button mat-raised-button color="primary" (click)="exportCSV()">Export as CSV</button>
+  <div class="dashboard-actions">
+    <button mat-stroked-button color="primary" (click)="saveLayout()">Save Layout</button>
+    <button mat-stroked-button color="accent" (click)="exportCSV()">Export CSV</button>
+    <button mat-stroked-button color="warn" (click)="resetLayout()">Reset Layout</button>
+  </div>
 </div>
 
 <gridster [options]="options">

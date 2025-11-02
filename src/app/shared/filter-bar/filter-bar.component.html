@@ -1,47 +1,49 @@
-<div class="filter-bar">
-  <!-- Dataset Selector -->
-  <mat-form-field appearance="outline">
-    <mat-label>Dataset</mat-label>
-    <mat-select [(value)]="selectedDataset">
-      <mat-option *ngFor="let ds of datasets" [value]="ds">{{ ds }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+<div class="filter-bar-wrapper">
+  <div class="filter-bar">
+    <!-- Dataset Selector -->
+    <mat-form-field appearance="outline">
+      <mat-label>Dataset</mat-label>
+      <mat-select [(value)]="selectedDataset">
+        <mat-option *ngFor="let ds of datasets" [value]="ds">{{ ds }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <!-- Quick Range Dropdown -->
-  <mat-form-field appearance="outline" class="range-select">
-    <mat-label>Date Range</mat-label>
-    <mat-select [(value)]="selectedRange" (selectionChange)="onRangeChange($event.value)">
-      <mat-option value="">Custom</mat-option>
-      <mat-option value="last7">Last 7 Days</mat-option>
-      <mat-option value="last30">Last 30 Days</mat-option>
-      <mat-option value="last90">Last 90 Days</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <!-- Quick Range Dropdown -->
+    <mat-form-field appearance="outline" class="range-select">
+      <mat-label>Date Range</mat-label>
+      <mat-select [(value)]="selectedRange" (selectionChange)="onRangeChange($event.value)">
+        <mat-option value="">Custom</mat-option>
+        <mat-option value="last7">Last 7 Days</mat-option>
+        <mat-option value="last30">Last 30 Days</mat-option>
+        <mat-option value="last90">Last 90 Days</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <!-- From / To Pickers -->
-  <mat-form-field appearance="outline" class="date-input">
-    <mat-label>From</mat-label>
-    <input
-      matInput
-      [matDatepicker]="fromPicker"
-      [(ngModel)]="startDate"
-      (dateChange)="onDateChange()"
-    />
-    <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-    <mat-datepicker #fromPicker></mat-datepicker>
-  </mat-form-field>
+    <!-- From / To Pickers -->
+    <mat-form-field appearance="outline" class="date-input">
+      <mat-label>From</mat-label>
+      <input
+        matInput
+        [matDatepicker]="fromPicker"
+        [(ngModel)]="startDate"
+        (dateChange)="onDateChange()"
+      />
+      <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromPicker></mat-datepicker>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline" class="date-input">
-    <mat-label>To</mat-label>
-    <input
-      matInput
-      [matDatepicker]="toPicker"
-      [(ngModel)]="endDate"
-      (dateChange)="onDateChange()"
-    />
-    <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-    <mat-datepicker #toPicker></mat-datepicker>
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="date-input">
+      <mat-label>To</mat-label>
+      <input
+        matInput
+        [matDatepicker]="toPicker"
+        [(ngModel)]="endDate"
+        (dateChange)="onDateChange()"
+      />
+      <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+      <mat-datepicker #toPicker></mat-datepicker>
+    </mat-form-field>
+  </div>
 
-  <button mat-stroked-button  (click)="clear()">Clear</button>
+  <button mat-stroked-button class="clear-btn" (click)="clear()">Clear</button>
 </div>

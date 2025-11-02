@@ -85,8 +85,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dashboard = this.state.getLayout<DashboardItem[]>([
       { cols: 2, rows: 1, y: 0, x: 0, label: 'Total Sales' },
       { cols: 4, rows: 1, y: 0, x: 2, label: 'Filter Bar' },
-      { cols: 2, rows: 3, y: 1, x: 0, label: 'Line Chart' },
-      { cols: 2, rows: 3, y: 1, x: 2, label: 'Bar Chart' },
+      { cols: 2, rows: 3, y: 1, x: 0, label: 'Total Sales Chart' },
+      { cols: 2, rows: 3, y: 1, x: 2, label: 'Chart' },
       { cols: 2, rows: 3, y: 1, x: 4, label: 'Table' },
     ]);
 
@@ -238,8 +238,8 @@ resetLayout() {
   this.dashboard = this.state.getLayout<DashboardItem[]>([
     { cols: 2, rows: 1, y: 0, x: 0, label: 'Total Sales' },
     { cols: 4, rows: 1, y: 0, x: 2, label: 'Filter Bar' },
-    { cols: 2, rows: 3, y: 1, x: 0, label: 'Line Chart' },
-    { cols: 2, rows: 3, y: 1, x: 2, label: 'Bar Chart' },
+    { cols: 2, rows: 3, y: 1, x: 0, label: 'Total Sales Chart' },
+    { cols: 2, rows: 3, y: 1, x: 2, label: 'Chart' },
     { cols: 2, rows: 3, y: 1, x: 4, label: 'Table' },
   ]);
 }

@@ -15,7 +15,7 @@
           <span>{{ item.label }}</span>
           
           <!-- Chart type selector for Line Chart widget -->
-          @if (item.label === 'Line Chart') {
+          @if (item.label === 'Total Sales Chart') {
             <div class="chart-controls">
               <mat-form-field appearance="outline" class="chart-type-selector">
                 <mat-label>Chart Type</mat-label>
@@ -28,8 +28,8 @@
             </div>
           }
           
-          <!-- Chart type selector for Bar Chart widget -->
-          @if (item.label === 'Bar Chart') {
+          <!-- Chart type selector for Chart widget -->
+          @if (item.label === 'Chart') {
             <div class="chart-controls">
               <mat-form-field appearance="outline" class="chart-type-selector">
                 <mat-label>Chart Type</mat-label>
@@ -49,7 +49,7 @@
               <h3>{{ totalSales | currency:'USD':'symbol':'1.0-0' }}</h3>
             </div>
           }
-          @else if (item.label === 'Line Chart') {
+          @else if (item.label === 'Total Sales Chart') {
             <div class="chart-container">
               <div class="chart-header">
                 <h4>{{ getChartTitle('line', lineChartType) }}</h4>
@@ -63,7 +63,7 @@
               </div>
             </div>
           }
-          @else if (item.label === 'Bar Chart') {
+          @else if (item.label === 'Chart') {
             <div class="chart-container">
               <div class="chart-header">
                 <h4>{{ getChartTitle('bar', barChartType) }}</h4>

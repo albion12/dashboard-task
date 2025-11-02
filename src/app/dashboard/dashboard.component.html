@@ -51,36 +51,31 @@
                 <h4>{{ getChartTitle('line', lineChartType) }}</h4>
               </div>
               <div class="chart-wrapper">
-                <canvas 
-                  baseChart 
-                  [type]="lineChartType" 
-                  [data]="getLineChartData()" 
-                  [options]="getChartOptions(lineChartType)">
+                <canvas baseChart
+                        [type]="lineChartType"
+                        [data]="getLineChartData()"
+                        [options]="getChartOptions(lineChartType)">
                 </canvas>
               </div>
             </div>
           }
-          
           @else if (item.label === 'Bar Chart') {
             <div class="chart-container">
               <div class="chart-header">
                 <h4>{{ getChartTitle('bar', barChartType) }}</h4>
               </div>
               <div class="chart-wrapper">
-                <canvas 
-                  baseChart 
-                  [type]="barChartType" 
-                  [data]="getBarChartData()" 
-                  [options]="getChartOptions(barChartType)">
+                <canvas baseChart
+                        [type]="barChartType"
+                        [data]="getBarChartData()"
+                        [options]="getChartOptions(barChartType)">
                 </canvas>
               </div>
             </div>
           }
-          
           @else if (item.label === 'Table') {
             <app-table-widget [sales]="sales"></app-table-widget>
           }
-          
           @else if (item.label === 'Filter Bar') {
             <app-filter-bar></app-filter-bar>
           }

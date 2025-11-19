@@ -19,6 +19,8 @@ import { DashboardItem } from '../core/models/dashboard-item.model';
 import { DataExportService } from '../core/services/data-export.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TableWidgetComponent } from '../table/table-widget.component';
+import { ViewChildren, QueryList } from '@angular/core';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -77,6 +79,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       pushItems: true,
       margin: 2,
       displayGrid: 'none',
+
+      itemResizeCallback: this.onItemResize.bind(this),
+    itemResizeStopCallback: this.onItemResizeStop.bind(this),
 
       minCols: 6,
       minRows: 4,
@@ -234,12 +239,39 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
 resetLayout() {
   localStorage.removeItem('dashboard_layout_v1');
-  this.dashboard = this.state.getLayout<DashboardItem[]>([
+
+  this.dashboard = [
     { cols: 2, rows: 1, y: 0, x: 0, label: 'Total Sales' },
     { cols: 4, rows: 1, y: 0, x: 2, label: 'Filter Bar' },
     { cols: 2, rows: 3, y: 1, x: 0, label: 'Total Sales Chart' },
     { cols: 2, rows: 3, y: 1, x: 2, label: 'Chart' },
     { cols: 2, rows: 3, y: 1, x: 4, label: 'Table' },
-  ]);
+  ];
+
+  // 🔥 Force Gridster to refresh
+  setTimeout(() => {
+    this.options.api?.optionsChanged?.();
+    this.options.api?.resize?.();
+    // this.options.api?.redraw?.();
+  });
 }
+@ViewChildren(BaseChartDirective) charts!: QueryList<BaseChartDirective>;
+
+refreshCharts() {
+  if (!this.charts) return;
+
+  this.charts.forEach((chart) => {
+    chart.chart?.resize(); // resize canvas
+    chart.update();        // update chart
+  });
+}
+
+onItemResize(item: any, itemComponent: any) {
+  this.refreshCharts();
+}
+
+onItemResizeStop(item: any, itemComponent: any) {
+  this.refreshCharts();
+}
+
 }

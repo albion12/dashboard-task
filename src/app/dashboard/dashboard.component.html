@@ -13,8 +13,7 @@
       <mat-card class="widget-card">
         <div class="widget-header">
           <span>{{ item.label }}</span>
-          
-          <!-- Chart type selector for Line Chart widget -->
+
           @if (item.label === 'Total Sales Chart') {
             <div class="chart-controls">
               <mat-form-field appearance="outline" class="chart-type-selector">
@@ -22,13 +21,11 @@
                 <mat-select [(value)]="lineChartType">
                   <mat-option value="line">Line Chart</mat-option>
                   <mat-option value="bar">Bar Chart</mat-option>
-                  <mat-option value="pie">Pie Chart</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
           }
-          
-          <!-- Chart type selector for Chart widget -->
+
           @if (item.label === 'Chart') {
             <div class="chart-controls">
               <mat-form-field appearance="outline" class="chart-type-selector">
@@ -36,13 +33,12 @@
                 <mat-select [(value)]="barChartType">
                   <mat-option value="line">Line Chart</mat-option>
                   <mat-option value="bar">Bar Chart</mat-option>
-                  <mat-option value="pie">Pie Chart</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
           }
         </div>
-        
+
         <div class="widget-body">
           @if (item.label === 'Total Sales') {
             <div class="sales">
@@ -78,7 +74,7 @@
             </div>
           }
           @else if (item.label === 'Table') {
-           <app-table-widget [sales]="dataSource.data"></app-table-widget>
+            <app-table-widget [rows]="tableRows"></app-table-widget>
           }
           @else if (item.label === 'Filter Bar') {
             <app-filter-bar></app-filter-bar>

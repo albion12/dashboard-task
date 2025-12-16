@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, Input, ViewChild, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -14,10 +14,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   styleUrls: ['./table-widget.component.scss'],
 })
 export class TableWidgetComponent implements AfterViewInit, OnChanges {
-  @Input() sales: any[] = [];
+  @Input() rows: any[] = [];
 
-  displayedColumns = ['user', 'email', 'country', 'amount', 'date'];
-  dataSource = new MatTableDataSource<any>();
+  displayedColumns: string[] = [];
+  dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -27,13 +27,26 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges {
     this.dataSource.sort = this.sort;
   }
 
-  ngOnChanges() {
-    this.dataSource.data = this.sales.map((s) => ({
-      user: s.user,
-      email: `${s.user.replace(/\s+/g, '.').toLowerCase()}@example.com`,
-      country: s.country,
-      amount: s.amount,
-      date: s.date,
-    }));
+  ngOnChanges(changes: SimpleChanges) {
+    if (!changes['rows']) return;
+
+    const data = Array.isArray(this.rows) ? this.rows : [];
+    this.dataSource.data = data;
+
+    const keys = new Set<string>();
+    for (const r of data) {
+      if (r && typeof r === 'object' && !Array.isArray(r)) {
+        Object.keys(r).forEach(k => keys.add(k));
+      }
+    }
+    this.displayedColumns = Array.from(keys);
+
+    this.paginator?.firstPage();
+  }
+
+  formatCell(value: any): string {
+    if (value === null || value === undefined) return '';
+    if (typeof value === 'object') return JSON.stringify(value);
+    return String(value);
   }
 }

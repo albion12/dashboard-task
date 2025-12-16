@@ -1,0 +1,59 @@
+<mat-sidenav-container class="app-container">
+  <!-- Left sidenav -->
+  <mat-sidenav
+    #drawer
+    class="app-sidenav"
+    [mode]="isMobile() ? 'over' : 'side'"
+    [opened]="!isMobile() ? sidenavOpened() : sidenavOpened()"
+    (openedChange)="sidenavOpened.set($event)"
+  >
+    <div class="brand">
+      <mat-icon>dashboard</mat-icon>
+      <span>Analytics</span>
+    </div>
+
+    <mat-nav-list>
+      <a
+        mat-list-item
+        *ngFor="let item of navItems"
+        [routerLink]="item.path"
+        [class.active]="isActive(item)"
+        tabindex="0"
+        aria-current="{{ isActive(item) ? 'page' : 'false' }}"
+      >
+        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+        <span matListItemTitle>{{ item.label }}</span>
+      </a>
+    </mat-nav-list>
+
+    <mat-divider></mat-divider>
+    <div class="sidenav-footer">
+      <a mat-button href="https://angular.dev/" target="_blank" rel="noopener">Angular Docs</a>
+    </div>
+  </mat-sidenav>
+
+  <!-- Main content -->
+  <mat-sidenav-content class="app-content">
+    <mat-toolbar color="primary" class="app-toolbar">
+      <button mat-icon-button (click)="toggleSidenav()" aria-label="Toggle sidenav">
+        <mat-icon>{{ sidenavOpened() ? 'menu_open' : 'menu' }}</mat-icon>
+      </button>
+
+      <span class="spacer"></span>
+      <span class="title">Angular Dashboard</span>
+      <span class="spacer"></span>
+
+      <!-- Top right quick actions -->
+      <a mat-icon-button routerLink="/dashboard" aria-label="Go to dashboard">
+        <mat-icon>analytics</mat-icon>
+      </a>
+      <a mat-icon-button routerLink="/home" aria-label="Go to home">
+        <mat-icon>home</mat-icon>
+      </a>
+    </mat-toolbar>
+
+    <main class="page">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

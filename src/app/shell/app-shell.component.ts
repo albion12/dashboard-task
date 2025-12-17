@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { filter } from 'rxjs/operators';
+import { AuthService } from '../core/services/auth.service';
 
 type NavItem = { label: string; icon: string; path: string; matchStarts?: boolean };
 
@@ -29,6 +30,7 @@ type NavItem = { label: string; icon: string; path: string; matchStarts?: boolea
 })
 export class AppShellComponent implements OnInit {
   private router = inject(Router);
+  private auth = inject(AuthService);
 
   // Toggle responsive mode: when viewport <= 960px, sidenav uses 'over'
   isMobile = signal<boolean>(false);
@@ -76,5 +78,10 @@ export class AppShellComponent implements OnInit {
     } catch {
       return true;
     }
+  }
+
+  logout(): void {
+    this.auth.logout();
+    this.router.navigate(['/login']);
   }
 }

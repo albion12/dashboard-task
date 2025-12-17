@@ -35,6 +35,27 @@ form {
   color: #f44336;
   font-size: 0.85rem;
   min-height: 1.2rem;
+  padding: 0.5rem 0;
+}
+
+.button-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.inline-spinner {
+  display: inline-block;
+  
+  ::ng-deep circle {
+    stroke: currentColor;
+  }
+}
+
+button[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 

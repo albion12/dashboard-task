@@ -1,10 +1,12 @@
 .filter-bar-wrapper {
   position: relative;
-  padding: 1rem;
-  border-radius: 0px;
-  background: #fff;
-  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.08);
-  min-height: 120px;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  min-height: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .filter-bar {
@@ -12,31 +14,35 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 1rem;
+  flex: 1;
 
   mat-form-field {
-    min-width: 180px;
+    min-width: 160px;
+    flex: 1 1 auto;
   }
 
   .range-select {
-    min-width: 150px;
+    min-width: 140px;
+    flex: 0 0 auto;
   }
 
   .date-input {
-    width: 150px;
+    width: 140px;
+    flex: 0 0 auto;
   }
 
   button {
-    height: 48px;
+    height: 40px;
   }
 }
 
 .clear-btn {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  height: 40px;
-  padding: 0 1.2rem;
+  align-self: flex-end;
+  margin-top: 0.5rem;
+  height: 36px;
+  padding: 0 1rem;
   font-weight: 500;
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {

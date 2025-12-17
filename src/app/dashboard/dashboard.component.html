@@ -11,32 +11,37 @@
   @for (item of dashboard; track $index) {
     <gridster-item [item]="item">
       <mat-card class="widget-card">
-        <div class="widget-header">
-          <span>{{ item.label }}</span>
+        <div class="widget-header widget-drag-handle">
+          <div class="widget-title">
+            <mat-icon class="widget-icon">{{ getWidgetIcon(item.label) }}</mat-icon>
+            <span>{{ item.label }}</span>
+          </div>
 
-          @if (item.label === 'Total Sales Chart') {
-            <div class="chart-controls">
-              <mat-form-field appearance="outline" class="chart-type-selector">
-                <mat-label>Chart Type</mat-label>
-                <mat-select [(value)]="lineChartType">
-                  <mat-option value="line">Line Chart</mat-option>
-                  <mat-option value="bar">Bar Chart</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          }
+          <div class="widget-actions">
+            @if (item.label === 'Total Sales Chart') {
+              <div class="chart-controls">
+                <mat-form-field appearance="outline" class="chart-type-selector widget-no-drag">
+                  <mat-label>Chart Type</mat-label>
+                  <mat-select [(value)]="lineChartType">
+                    <mat-option value="line">Line Chart</mat-option>
+                    <mat-option value="bar">Bar Chart</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            }
 
-          @if (item.label === 'Chart') {
-            <div class="chart-controls">
-              <mat-form-field appearance="outline" class="chart-type-selector">
-                <mat-label>Chart Type</mat-label>
-                <mat-select [(value)]="barChartType">
-                  <mat-option value="line">Line Chart</mat-option>
-                  <mat-option value="bar">Bar Chart</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          }
+            @if (item.label === 'Chart') {
+              <div class="chart-controls">
+                <mat-form-field appearance="outline" class="chart-type-selector widget-no-drag">
+                  <mat-label>Chart Type</mat-label>
+                  <mat-select [(value)]="barChartType">
+                    <mat-option value="line">Line Chart</mat-option>
+                    <mat-option value="bar">Bar Chart</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            }
+          </div>
         </div>
 
         <div class="widget-body">

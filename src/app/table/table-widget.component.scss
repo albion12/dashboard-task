@@ -1,0 +1,75 @@
+.table-widget-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 0;
+  gap: 0.75rem;
+}
+
+.table-filter {
+  width: 100%;
+  flex-shrink: 0;
+
+  ::ng-deep .mat-mdc-form-field-wrapper {
+    padding-bottom: 0;
+  }
+
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    height: 40px;
+  }
+
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}
+
+.table-scroll-container {
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.table-content {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    font-weight: 600;
+    background: #f9fafb;
+    color: #374151;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 2px solid #e5e7eb;
+  }
+
+  th, td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+  }
+
+  td {
+    color: #4b5563;
+  }
+
+  tr:hover {
+    background-color: #f9fafb;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.table-paginator {
+  flex-shrink: 0;
+  border-top: 1px solid #e5e7eb;
+  background: #fafbfc;
+  border-radius: 8px;
+}
+

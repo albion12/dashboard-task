@@ -1,23 +1,26 @@
-<mat-form-field appearance="outline" class="w-100">
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="dataSource.filter = $any($event.target).value.trim().toLowerCase()">
-</mat-form-field>
+<div class="table-widget-container">
+  <mat-form-field appearance="outline" class="table-filter">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="dataSource.filter = $any($event.target).value.trim().toLowerCase()" placeholder="Search...">
+    <mat-icon matPrefix>search</mat-icon>
+  </mat-form-field>
 
-<div class="table-wrapper">
-  <table mat-table [dataSource]="dataSource" matSort>
+  <div class="table-scroll-container">
+    <table mat-table [dataSource]="dataSource" matSort class="table-content">
 
-    <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ col }}
-      </th>
-      <td mat-cell *matCellDef="let row">
-        {{ formatCell(row[col]) }}
-      </td>
-    </ng-container>
+      <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ col }}
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ formatCell(row[col]) }}
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
 
-  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" class="table-paginator"></mat-paginator>
 </div>

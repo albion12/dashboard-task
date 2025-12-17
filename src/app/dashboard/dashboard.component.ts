@@ -6,10 +6,11 @@ import {
   ViewChild,
   ViewChildren,
   QueryList,
+  HostListener,
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GridsterConfig, GridsterModule } from 'angular-gridster2';
+import { GridsterConfig, GridsterModule, GridType, CompactType } from 'angular-gridster2';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -83,13 +84,44 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.options = {
-      draggable: { enabled: true },
-      resizable: { enabled: true },
-      pushItems: true,
-      margin: 2,
-      displayGrid: 'none',
-      minCols: 6,
+      gridType: GridType.Fit,
+      compactType: CompactType.None,
+      margin: 12,
+      outerMargin: true,
+      outerMarginTop: 0,
+      outerMarginRight: 0,
+      outerMarginBottom: 0,
+      outerMarginLeft: 0,
+      rowHeight: 80,
+      minCols: 4,
+      maxCols: 12,
       minRows: 4,
+      pushItems: true,
+      swap: true,
+      disableScrollVertical: true,
+      disableScrollHorizontal: true,
+      mobileBreakpoint: 768,
+      draggable: {
+        enabled: true,
+        ignoreContentClass: 'widget-no-drag',
+        dragHandleClass: 'widget-drag-handle',
+        stop: this.onItemResizeStop.bind(this),
+      },
+      resizable: {
+        enabled: true,
+        handles: {
+          s: true,
+          e: true,
+          n: false,
+          w: false,
+          se: true,
+          ne: false,
+          sw: false,
+          nw: false,
+        },
+        stop: this.onItemResizeStop.bind(this),
+      },
+      displayGrid: 'onDrag&Resize',
       itemResizeCallback: this.onItemResize.bind(this),
       itemResizeStopCallback: this.onItemResizeStop.bind(this),
     };
@@ -153,6 +185,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             },
           ],
         };
+
+        this.refreshCharts();
       }
     );
   }
@@ -161,6 +195,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+  }
+
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    if (this.options?.api?.resize) {
+      this.options.api.resize();
+    }
   }
 
   private applyDateFilter(rows: SalesApiRow[], f: Filters): SalesApiRow[] {
@@ -208,6 +249,17 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getChartTitle(widget: 'line' | 'bar', _type: ChartType): string {
     return widget === 'line' ? 'Daily Sales Over Time' : 'Daily Sales';
+  }
+
+  getWidgetIcon(label: string): string {
+    const iconMap: Record<string, string> = {
+      'Total Sales': 'attach_money',
+      'Filter Bar': 'filter_list',
+      'Total Sales Chart': 'show_chart',
+      'Chart': 'bar_chart',
+      'Table': 'table_chart',
+    };
+    return iconMap[label] || 'dashboard';
   }
 
   exportCSV(): void {

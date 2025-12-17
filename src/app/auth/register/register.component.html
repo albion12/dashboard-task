@@ -1,6 +1,6 @@
-<div class="login-page">
-  <mat-card class="login-card">
-    <h1 class="title">Sign in</h1>
+<div class="register-page">
+  <mat-card class="register-card">
+    <h1 class="title">Create account</h1>
 
     <form [formGroup]="form" (ngSubmit)="submit()" [attr.aria-busy]="isLoading">
       <mat-form-field appearance="outline" class="full-width">
@@ -24,10 +24,28 @@
           matInput
           type="password"
           formControlName="password"
-          autocomplete="current-password"
+          autocomplete="new-password"
           [disabled]="isLoading"
         />
         <mat-error *ngIf="password?.hasError('required')">Password is required</mat-error>
+        <mat-error *ngIf="password?.hasError('minlength')">
+          Password must be at least {{ password?.errors?.['minlength']?.requiredLength }} characters
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Confirm Password</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="confirmPassword"
+          autocomplete="new-password"
+          [disabled]="isLoading"
+        />
+        <mat-error *ngIf="confirmPassword?.hasError('required')">Please confirm your password</mat-error>
+        <mat-error *ngIf="form.hasError('passwordMismatch') && !confirmPassword?.hasError('required')">
+          Passwords do not match
+        </mat-error>
       </mat-form-field>
 
       <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
@@ -39,19 +57,18 @@
         type="submit"
         [disabled]="isLoading"
       >
-        <span *ngIf="!isLoading">Login</span>
+        <span *ngIf="!isLoading">Create account</span>
         <span *ngIf="isLoading" class="button-loading">
           <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
-          Logging in...
+          Creating account...
         </span>
       </button>
 
       <div class="link-container">
-        <span>Don't have an account?</span>
-        <a routerLink="/register" class="link">Create account</a>
+        <span>Already have an account?</span>
+        <a routerLink="/login" class="link">Login</a>
       </div>
     </form>
   </mat-card>
 </div>
-
 

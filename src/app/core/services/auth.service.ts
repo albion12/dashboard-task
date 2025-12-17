@@ -1,7 +1,7 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { Observable, catchError, tap, throwError, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 export interface LoginResponse {
@@ -15,6 +15,13 @@ export interface LoginResponse {
 export interface User {
   email: string;
   role?: string;
+}
+
+export interface RegisterResponse {
+  user: {
+    email: string;
+    role?: string;
+  };
 }
 
 const TOKEN_KEY = 'auth_token_v1';
@@ -42,8 +49,38 @@ export class AuthService {
   }
 
   /**
+   * Register a new user
+   * After successful registration, automatically logs in the user
+   * Returns Observable that emits LoginResponse on success (after auto-login)
+   */
+  register(email: string, password: string): Observable<LoginResponse> {
+    return this.http.post<RegisterResponse>(`${environment.apiBaseUrl}/auth/register`, { email, password }).pipe(
+      // After successful registration, automatically log in
+      switchMap(() => {
+        return this.login(email, password);
+      }),
+      tap(() => {
+        // Login successful - token and user are set, redirect to dashboard
+        this.router.navigate(['/dashboard']);
+      }),
+      catchError((error) => {
+        // If registration failed, throw error
+        // If registration succeeded but login failed, redirect to login page
+        if (error.status !== 409 && error.status !== 400) {
+          // Registration succeeded but login failed
+          console.error('Registration successful but auto-login failed', error);
+          this.router.navigate(['/login'], {
+            queryParams: { registered: 'true' },
+          });
+        }
+        return throwError(() => error);
+      })
+    );
+  }
+
+  /**
    * Login with email and password
-   * Returns Observable that emits true on success, or throws error
+   * Returns Observable that emits LoginResponse on success, or throws error
    */
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http
